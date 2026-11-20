@@ -1,0 +1,1187 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff0f3">
+<title>Una carta para ti ❤️</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================
+   CONFIGURACIÓN GENERAL
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --rosa: #f6c4d1;
+    --rosa-fuerte: #d77b98;
+    --vino: #873c57;
+    --crema: #fffaf5;
+    --dorado: #c6a56b;
+    --texto: #684b55;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fff0f3, #fffaf5, #fce5eb);
+    color: var(--texto);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* =====================================
+   LLUVIA DE CORAZONES
+===================================== */
+
+#heart-rain {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.heart {
+    position: absolute;
+    top: -40px;
+    color: #e89bb1;
+    opacity: 0.65;
+    animation: falling linear forwards;
+    user-select: none;
+}
+
+@keyframes falling {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.7;
+    }
+    85% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* =====================================
+   PANTALLA DEL SOBRE
+===================================== */
+
+#inicio {
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    position: relative;
+    z-index: 2;
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.intro-content {
+    text-align: center;
+}
+
+.intro-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    color: var(--vino);
+    margin-bottom: 12px;
+}
+
+.intro-subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: #aa788a;
+    margin-bottom: 55px;
+    text-transform: uppercase;
+}
+
+.envelope-container {
+    position: relative;
+    width: min(320px, 82vw);
+    height: 210px;
+    margin: auto;
+    perspective: 1000px;
+    cursor: pointer;
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+.envelope {
+    position: absolute;
+    inset: 0;
+    background: #eeb5c4;
+    border-radius: 5px;
+    box-shadow: 0 15px 35px rgba(140, 65, 91, 0.2);
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #f7d4dc;
+    clip-path: polygon(0 0, 50% 57%, 100% 0);
+    z-index: 3;
+}
+
+.envelope::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #e6a5b8;
+    clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+    z-index: 4;
+}
+
+.envelope-side {
+    position: absolute;
+    inset: 0;
+    background: #f0bdca;
+    clip-path: polygon(0 0, 50% 55%, 0 100%);
+    z-index: 2;
+}
+
+.envelope-right {
+    position: absolute;
+    inset: 0;
+    background: #eeb0c1;
+    clip-path: polygon(100% 0, 50% 55%, 100% 100%);
+    z-index: 2;
+}
+
+.envelope-flap {
+    position: absolute;
+    inset: 0;
+    background: #f9dce3;
+    clip-path: polygon(0 0, 100% 0, 50% 57%);
+    transform-origin: top;
+    transition: transform 0.9s ease;
+    z-index: 5;
+}
+
+.seal {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    background: linear-gradient(135deg, #b95775, #e18ba4);
+    border-radius: 50%;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 25px;
+    z-index: 6;
+    box-shadow: 0 4px 12px rgba(110, 40, 65, 0.25);
+    transition: opacity 0.5s;
+}
+
+.envelope-hint {
+    margin-top: 35px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: var(--vino);
+    animation: pulse 1.7s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: 0.5; }
+}
+
+/* Apertura del sobre */
+
+.envelope-container.opened .envelope-flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope-container.opened .seal {
+    opacity: 0;
+}
+
+/* =====================================
+   BOTÓN DE MÚSICA
+===================================== */
+
+.music-control {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 50;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(198,165,107,.6);
+    background: rgba(255,250,245,.9);
+    color: var(--vino);
+    border-radius: 50%;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(120,50,70,.12);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.music-control:hover {
+    transform: scale(1.1);
+}
+
+/* =====================================
+   CARTA
+===================================== */
+
+#contenido {
+    display: none;
+    min-height: 100vh;
+    padding: 65px 18px 90px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+#contenido.visible {
+    opacity: 1;
+}
+
+.letter {
+    width: min(780px, 100%);
+    margin: auto;
+    background: rgba(255, 251, 247, 0.96);
+    padding: clamp(25px, 6vw, 65px);
+    border: 1px solid #ecd8d0;
+    border-radius: 8px;
+    box-shadow: 0 15px 55px rgba(128, 70, 85, 0.13);
+    position: relative;
+}
+
+.letter::before {
+    content: "♡";
+    position: absolute;
+    top: 15px;
+    right: 22px;
+    font-size: 40px;
+    color: #e8bac6;
+}
+
+.letter-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.letter-header .small {
+    color: var(--dorado);
+    letter-spacing: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.letter-header h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    color: var(--vino);
+    font-weight: normal;
+    margin: 12px 0;
+}
+
+.gold-line {
+    width: 90px;
+    height: 1px;
+    background: var(--dorado);
+    margin: 15px auto;
+}
+
+.letter-body {
+    font-size: 14px;
+    line-height: 2.2;
+    color: #72545d;
+    text-align: justify;
+}
+
+.letter-body p {
+    margin-bottom: 20px;
+    text-indent: 25px;
+}
+
+.letter-body .saludo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 29px;
+    color: var(--vino);
+    text-indent: 0;
+}
+
+.letter-body .highlight {
+    color: #ad6079;
+    font-weight: 500;
+}
+
+.signature {
+    margin-top: 40px;
+    text-align: right;
+}
+
+.signature p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 25px;
+    color: var(--vino);
+}
+
+.signature .firma {
+    font-family: 'Great Vibes', cursive;
+    font-size: 38px;
+}
+
+.next-button {
+    display: block;
+    margin: 40px auto 0;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #b85d79, #df91a7);
+    color: white;
+    font-size: 13px;
+    letter-spacing: 1px;
+    box-shadow: 0 7px 20px rgba(150, 75, 100, 0.2);
+    transition: 0.3s;
+}
+
+.next-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(150, 75, 100, 0.3);
+}
+
+/* =====================================
+   GALERÍA DE FOTOS
+===================================== */
+
+#recuerdos {
+    display: none;
+    padding: 75px 20px 90px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+#recuerdos.visible {
+    opacity: 1;
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.gallery-header .subtitle {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--dorado);
+    text-transform: uppercase;
+}
+
+.gallery-header h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3rem, 7vw, 5rem);
+    color: var(--vino);
+    margin: 10px 0;
+    font-weight: normal;
+}
+
+.gallery-header p {
+    font-size: 13px;
+    color: #987481;
+}
+
+.gallery {
+    width: min(1100px, 100%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 35px;
+    align-items: start;
+}
+
+.photo-card {
+    background: white;
+    padding: 12px 12px 25px;
+    box-shadow: 0 8px 25px rgba(120, 65, 80, 0.15);
+    border-radius: 4px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.photo-card:nth-child(odd) {
+    transform: rotate(-2deg);
+}
+
+.photo-card:nth-child(even) {
+    transform: rotate(2deg);
+}
+
+.photo-card:hover {
+    transform: translateY(-12px) rotate(0deg) scale(1.04);
+    box-shadow: 0 20px 40px rgba(120, 65, 80, 0.23);
+    z-index: 3;
+}
+
+.photo-card img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    display: block;
+    background: #f8e5ea;
+}
+
+.photo-caption {
+    text-align: center;
+    padding: 16px 5px 0;
+}
+
+.photo-caption p {
+    font-family: 'Dancing Script', cursive;
+    color: var(--vino);
+    font-size: 23px;
+    line-height: 1.4;
+}
+
+.photo-caption span {
+    color: var(--dorado);
+    font-size: 13px;
+    display: block;
+    margin-top: 7px;
+}
+
+/* =====================================
+   MENSAJE FINAL
+===================================== */
+
+.final-message {
+    text-align: center;
+    margin: 85px auto 0;
+    max-width: 650px;
+    padding: 30px 20px;
+}
+
+.final-message h2 {
+    font-family: 'Great Vibes', cursive;
+    color: var(--vino);
+    font-size: clamp(2.8rem, 7vw, 4rem);
+    font-weight: normal;
+}
+
+.final-message p {
+    margin-top: 18px;
+    line-height: 2;
+    color: #8b6875;
+    font-size: 14px;
+}
+
+.final-heart {
+    color: #d77b98;
+    font-size: 35px;
+    margin-top: 20px;
+    animation: heartbeat 1.3s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #b28d9a;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .intro-subtitle {
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 45px;
+    }
+
+    .envelope-container {
+        height: 175px;
+    }
+
+    #contenido {
+        padding: 45px 13px;
+    }
+
+    .letter-body {
+        font-size: 13px;
+        line-height: 2;
+    }
+
+    #recuerdos {
+        padding: 55px 18px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .photo-card {
+        padding: 8px 8px 18px;
+    }
+
+    .photo-caption p {
+        font-size: 19px;
+    }
+
+    .music-control {
+        right: 12px;
+        top: 12px;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media (max-width: 370px) {
+    .gallery {
+        grid-template-columns: 1fr;
+        max-width: 290px;
+    }
+}
+
+/* Accesibilidad: reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Lluvia de corazones -->
+<div id="heart-rain"></div>
+
+<!-- Música -->
+<audio id="backgroundMusic" src="cancion.mp3" loop preload="auto"></audio>
+
+<button class="music-control" id="musicButton"
+        aria-label="Reproducir o pausar música"
+        title="Música">
+    ♫
+</button>
+
+<!-- =====================================
+     PANTALLA INICIAL
+===================================== -->
+
+<section id="inicio">
+
+    <div class="intro-content">
+
+        <h1 class="intro-title">Tengo algo para ti...</h1>
+
+        <p class="intro-subtitle">
+            Una pequeña sorpresa hecha con cariño
+        </p>
+
+        <div class="envelope-container" id="envelope"
+             role="button" tabindex="0"
+             aria-label="Abrir la carta">
+
+            <div class="envelope">
+                <div class="envelope-side"></div>
+                <div class="envelope-right"></div>
+                <div class="envelope-flap"></div>
+                <div class="seal">♥</div>
+            </div>
+
+        </div>
+
+        <p class="envelope-hint">
+            Haz clic en el corazón para abrir ♡
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     CONTENIDO DE LA CARTA
+===================================== -->
+
+<main id="contenido">
+
+    <article class="letter">
+
+        <header class="letter-header">
+
+            <p class="small">Una carta escrita desde el corazón</p>
+
+            <h1>Para una mujer extraordinaria</h1>
+
+            <div class="gold-line"></div>
+
+            <p style="font-family:'Dancing Script';font-size:22px;color:#ad7889;">
+                Con mucho cariño ♡
+            </p>
+
+        </header>
+
+
+        <div class="letter-body">
+
+            <p class="saludo">Hola, hermosa...</p>
+
+            <p>
+                Hay personas que llegan a nuestras vidas y tienen algo
+                especial, algo que no siempre se puede explicar con
+                palabras. Personas cuya presencia transmite tranquilidad,
+                cuya sonrisa ilumina incluso los días más grises y cuya
+                manera de ser deja una huella bonita en el corazón.
+                Y creo que tú eres una de esas personas.
+            </p>
+
+            <p>
+                Hoy quiero dedicarte estas palabras, no solamente para
+                decirte lo hermosa que eres, sino también para recordarte
+                lo admirable que resulta la mujer que eres y todo lo que
+                representas.
+            </p>
+
+            <p>
+                Elegiste una profesión maravillosa: ser obstetra.
+                Una vocación que va mucho más allá de un título, de un
+                uniforme o de un horario de trabajo. Es una profesión
+                que requiere paciencia, inteligencia, sensibilidad,
+                fortaleza y, sobre todo, un corazón dispuesto a cuidar
+                de los demás.
+            </p>
+
+            <p>
+                Imagino que detrás de cada jornada existen momentos
+                difíciles, cansancio, responsabilidades y desafíos que
+                muchas veces los demás no alcanzamos a comprender.
+                Sin embargo, también existe algo extraordinario:
+                tienes el privilegio de acompañar uno de los momentos
+                más hermosos de la existencia humana, el nacimiento
+                de una nueva vida.
+            </p>
+
+            <p>
+                <span class="highlight">
+                Qué bonito es pensar que tus manos pueden brindar
+                tranquilidad, que tus conocimientos pueden marcar una
+                diferencia y que tu dedicación puede convertirse en
+                esperanza para una familia.
+                </span>
+                No cualquiera tiene la sensibilidad y la fortaleza
+                necesarias para desempeñar una labor tan especial.
+            </p>
+
+            <p>
+                Admiro a esa mujer inteligente que persigue sus sueños,
+                a esa profesional que se esfuerza por dar lo mejor de sí,
+                a esa persona que seguramente tiene días buenos y otros
+                complicados, pero que sigue adelante construyendo su
+                propio camino.
+            </p>
+
+            <p>
+                Y si hablamos de tu belleza, sinceramente, creo que
+                sería injusto limitarla solamente a lo que se puede ver.
+                Claro que tienes una sonrisa preciosa y una manera
+                especial de iluminar cualquier lugar, pero hay una
+                belleza mucho más profunda en tu forma de ser, en tus
+                metas, en tu inteligencia y en esa vocación tan bonita
+                que has elegido.
+            </p>
+
+            <p>
+                No sé si alguna vez te has detenido a pensar en lo
+                especial que puedes llegar a ser para alguien.
+                A veces, una sonrisa tuya puede mejorar un día entero;
+                una conversación contigo puede convertirse en uno de
+                esos recuerdos que uno guarda sin darse cuenta.
+                Y hay miradas que, sin decir absolutamente nada,
+                consiguen expresar muchísimo.
+            </p>
+
+            <p>
+                Quiero que nunca dudes de lo valiosa que eres.
+                Que cuando el cansancio aparezca recuerdes por qué
+                comenzaste, que cuando las cosas se compliquen no
+                olvides todo lo que has logrado y que siempre encuentres
+                motivos para sentirte orgullosa de la mujer en la que
+                te estás convirtiendo.
+            </p>
+
+            <p>
+                Si algún día pudiera regalarte algo, sería la posibilidad
+                de verte a través de mis ojos, para que pudieras
+                comprender lo maravillosa que puedes llegar a ser.
+                Porque hay detalles de ti que quizá consideras pequeños,
+                pero que para alguien pueden significar muchísimo.
+            </p>
+
+            <p>
+                No pretendo que estas palabras sean perfectas ni
+                encontrar la frase más bonita del mundo.
+                Simplemente quería regalarte un pequeño espacio donde
+                pudieras sentirte apreciada, admirada y querida.
+                Porque algunas personas merecen que les recuerden
+                lo extraordinarias que son.
+            </p>
+
+            <p>
+                Sigue brillando, sigue aprendiendo, sigue persiguiendo
+                tus sueños y nunca pierdas esa esencia que te hace
+                diferente. El mundo necesita profesionales con
+                conocimientos, pero también necesita personas con
+                un corazón tan humano como el tuyo.
+            </p>
+
+            <p>
+                Y si me permites decirte algo más personal:
+                entre tantas cosas bonitas que pueden existir en este
+                mundo, tú tienes una manera muy particular de hacer
+                que una persona sonría sin siquiera intentarlo.
+                Tal vez esa sea una de las cosas que más me gustan de ti.
+            </p>
+
+            <p>
+                Gracias por ser tú, por tu dedicación, por tu esfuerzo
+                y por recordarme que existen personas cuya belleza
+                también se encuentra en lo que hacen por los demás.
+            </p>
+
+            <p>
+                Nunca olvides que eres mucho más que una profesión,
+                mucho más que tus logros y mucho más que lo que los
+                demás puedan decir de ti. Eres una mujer valiosa,
+                capaz, hermosa y digna de recibir todo lo bonito
+                que la vida tenga preparado.
+            </p>
+
+        </div>
+
+
+        <div class="signature">
+
+            <p>Con admiración y mucho cariño,</p>
+
+            <p class="firma">Alguien que te admira ♡</p>
+
+        </div>
+
+
+        <button class="next-button" id="galleryButton">
+            Pa ti Obstetra ♡
+        </button>
+
+    </article>
+
+</main>
+
+
+<!-- =====================================
+     GALERÍA DE CINCO FOTOGRAFÍAS
+===================================== -->
+
+<section id="recuerdos">
+
+    <header class="gallery-header">
+
+        <p class="subtitle">Pequeños instantes, grandes sentimientos</p>
+
+        <h2>Un rincón de recuerdos</h2>
+
+        <p>
+            Porque hay momentos que merecen quedarse para siempre...
+        </p>
+
+        <div class="gold-line"></div>
+
+    </header>
+
+
+    <div class="gallery">
+
+        <!-- FOTO 1 -->
+        <div class="photo-card">
+
+            <img src="imagen%201.jpeg"
+                 alt="Primer recuerdo especial"
+                 loading="lazy">
+
+            <div class="photo-caption">
+                <p>
+                    Tu sonrisa tiene ese no sé qué
+                    que siempre consigue alegrarme.
+                </p>
+                <span>♡ Un recuerdo especial</span>
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 2 -->
+        <div class="photo-card">
+
+            <img src="imagen%202.jpeg"
+                 alt="Segundo recuerdo especial"
+                 loading="lazy">
+
+            <div class="photo-caption">
+                <p>
+                    Si la belleza tuviera nombre,
+                    seguramente llevaría el tuyo.
+                </p>
+                <span>♡ Una persona única</span>
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 3 -->
+        <div class="photo-card">
+
+            <img src="imagen%203.jpeg"
+                 alt="Tercer recuerdo especial"
+                 loading="lazy">
+
+            <div class="photo-caption">
+                <p>
+                    Hay fotografías bonitas,
+                    pero ninguna supera lo que transmites.
+                </p>
+                <span>♡ Momentos inolvidables</span>
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 4 -->
+        <div class="photo-card">
+
+            <img src="imagen%204.jpeg"
+                 alt="Cuarto recuerdo especial"
+                 loading="lazy">
+
+            <div class="photo-caption">
+                <p>
+                    Qué suerte tiene el mundo
+                    de coincidir con alguien como tú.
+                </p>
+                <span>♡ Mi admiración</span>
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 5 -->
+        <div class="photo-card">
+
+            <img src="imagen%205.jpeg"
+                 alt="Quinto recuerdo especial"
+                 loading="lazy">
+
+            <div class="photo-caption">
+                <p>
+                    Si pudiera guardar un instante,
+                    elegiría uno en el que estés sonriendo.
+                </p>
+                <span>♡ Para recordar siempre</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MENSAJE FINAL -->
+
+    <div class="final-message">
+
+        <h2>Y esto es solo un pequeño detalle...</h2>
+
+        <p>
+            No existen suficientes palabras para describir
+            lo bonito que puede ser admirar a alguien como tú.
+            Ojalá nunca te falten razones para sonreír,
+            sueños por cumplir y personas que sepan valorar
+            la maravillosa mujer que eres.
+        </p>
+
+        <div class="final-heart">♥</div>
+
+        <p style="font-family:'Dancing Script';font-size:25px;">
+            Con cariño, para ti.
+        </p>
+
+    </div>
+
+</section>
+
+
+<footer>
+    HECHO CON MUCHO CARIÑO ♡
+</footer>
+
+
+<!-- =====================================
+     JAVASCRIPT
+===================================== -->
+
+<script>
+
+/* =====================================
+   ELEMENTOS PRINCIPALES
+===================================== */
+
+const envelope = document.getElementById('envelope');
+const inicio = document.getElementById('inicio');
+const contenido = document.getElementById('contenido');
+const recuerdos = document.getElementById('recuerdos');
+
+const music = document.getElementById('backgroundMusic');
+const musicButton = document.getElementById('musicButton');
+
+const galleryButton = document.getElementById('galleryButton');
+
+let opened = false;
+
+
+/* =====================================
+   LLUVIA AUTOMÁTICA DE CORAZONES
+===================================== */
+
+const heartRain = document.getElementById('heart-rain');
+
+function createHeart() {
+
+    const heart = document.createElement('span');
+
+    heart.classList.add('heart');
+
+    const hearts = ['♥', '♡', '❤', '💕'];
+
+    heart.textContent = hearts[
+        Math.floor(Math.random() * hearts.length)
+    ];
+
+    heart.style.left = Math.random() * 100 + 'vw';
+
+    heart.style.fontSize = (12 + Math.random() * 20) + 'px';
+
+    const duration = 6 + Math.random() * 7;
+
+    heart.style.animationDuration = duration + 's';
+
+    heartRain.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, duration * 1000);
+
+}
+
+// Crear corazones constantemente
+setInterval(createHeart, 350);
+
+
+/* =====================================
+   ABRIR EL SOBRE
+===================================== */
+
+function openLetter() {
+
+    if (opened) return;
+
+    opened = true;
+
+    // Animación del sobre
+    envelope.classList.add('opened');
+
+    // Intentar reproducir la música
+    music.play()
+        .then(() => {
+            musicButton.textContent = '♫';
+        })
+        .catch(() => {
+            musicButton.textContent = '▶';
+        });
+
+    // Mostrar botón de música
+    musicButton.style.display = 'flex';
+
+    // Ocultar pantalla inicial
+    setTimeout(() => {
+
+        inicio.style.opacity = '0';
+        inicio.style.transform = 'scale(0.9)';
+
+        setTimeout(() => {
+
+            inicio.style.display = 'none';
+
+            contenido.style.display = 'block';
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'instant'
+            });
+
+            setTimeout(() => {
+                contenido.classList.add('visible');
+            }, 100);
+
+        }, 900);
+
+    }, 900);
+
+}
+
+
+// Evento de clic
+envelope.addEventListener('click', openLetter);
+
+// También permitir abrir con Enter o espacio
+envelope.addEventListener('keydown', (event) => {
+
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLetter();
+    }
+
+});
+
+
+/* =====================================
+   CONTROL DE MÚSICA
+===================================== */
+
+musicButton.addEventListener('click', () => {
+
+    if (music.paused) {
+
+        music.play()
+            .then(() => {
+                musicButton.textContent = '♫';
+            })
+            .catch(error => {
+                console.log('No se pudo reproducir el audio:', error);
+            });
+
+    } else {
+
+        music.pause();
+
+        musicButton.textContent = '▶';
+
+    }
+
+});
+
+music.addEventListener('play', () => {
+    musicButton.textContent = '♫';
+});
+
+music.addEventListener('pause', () => {
+    musicButton.textContent = '▶';
+});
+
+
+/* =====================================
+   DESPLAZAMIENTO HACIA LA GALERÍA
+===================================== */
+
+galleryButton.addEventListener('click', () => {
+
+    recuerdos.style.display = 'block';
+
+    setTimeout(() => {
+
+        recuerdos.classList.add('visible');
+
+        recuerdos.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+
+    }, 100);
+
+});
+
+
+/* =====================================
+   DETECTAR IMÁGENES QUE NO CARGAN
+===================================== */
+
+document.querySelectorAll('.photo-card img').forEach(img => {
+
+    img.addEventListener('error', () => {
+
+        img.alt = 'No se encontró la fotografía: ' + img.getAttribute('src');
+
+        img.style.objectFit = 'contain';
+
+        img.style.padding = '20px';
+
+        img.style.color = '#873c57';
+
+        img.style.background = '#f8e5ea';
+
+        console.warn('No se encontró la imagen:', img.getAttribute('src'));
+
+    });
+
+});
+
+
+/* =====================================
+   MENSAJE DE CONSOLA
+===================================== */
+
+console.log('Una pequeña carta hecha con cariño ♥');
+
+</script>
+
+</body>
+</html>
